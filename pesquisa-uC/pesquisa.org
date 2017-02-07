@@ -1,0 +1,6 @@
+#+TITLE: Pesquisa de Microcontroladores - Computação Embarcada
+#+AUTHOR: Pedro Cunial
+* Visão Geral
+  1. Quais são os principais fabricantes de microcontrolador?
+      Os três maiores fabricantes de microcontroladores são (sem nenhuma ordem específica) Texas, Atmel e Microchip.
+  3.

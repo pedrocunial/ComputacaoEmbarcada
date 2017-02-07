@@ -1,0 +1,134 @@
+% Created 2017-02-07 Tue 13:53
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\author{Pedro Cunial}
+\date{\today}
+\title{Pesquisa de Microcontroladores - Computação Embarcada}
+\hypersetup{
+ pdfauthor={Pedro Cunial},
+ pdftitle={Pesquisa de Microcontroladores - Computação Embarcada},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 25.1.1 (Org mode 8.3.6)},
+ pdflang={Portuguese}}
+\begin{document}
+
+\maketitle
+
+\section{Visão Geral}
+\label{sec:orgheadline1}
+\begin{enumerate}
+  \item Quais são os principais fabricantes de microcontrolador?
+
+    Os três maiores fabricantes de microcontroladores são (sem nenhuma ordem específica) Texas, Atmel e Microchip.
+
+  \item Liste os processadores utilizados por pelo menos 3 tipos de Arduino e faça
+    um comparativo entre eles.
+
+    O Arduino Uno possui um controlador ATmega328 (Atmel), o Mega possui um
+    controlador ATmega2560 (Atmel), enquanto o Due possui um ARM Cortex-M3.
+    Enquanto ambos processadores ATmega são 8 bits, o Cortex-M3 é de 32 bits e,
+    por mais que todos sejam RISC, somente o Cortex-M3 é ARM, enquando os da Atmel
+    são AVR. A diferença entre os processadores do Uno e do Mega é que o do Mega é
+    mais potente.
+
+  \item O que é bigendian e little endian (Endianness)?
+
+    Little endian e bigendian são maneiras de se organizar dados que ocupariam
+    mais de um byte (8 bits). O little endian ordena os bytes são guardados de
+    forma que o os bytes que formam as menores casas do número ficam nas primeiras
+    casas, enquanto o bigendian é o contrário. Os processadores da Intel (x86) e
+    AMD (processadores mais comuns em computadores) usam a arquitetura little
+    endian. Não existem exemplos atuais de processadores que utilizem
+    exclusivamente o bigendian, no entanto, algumas arquiteturas, como a ARM,
+    utilizam a chamada bi-endian, onde pode-se alterar a maneira com que se guarda
+    os bytes, permitindo maior eficiência.
+
+\end{enumerate}
+
+\section{ARM}
+\label{sec:orgheadline2}
+\begin{enumerate}
+  \item Descreva o funcionamento do barramento AMBA (APB, AHB) e como o mesmo é
+    utilizado.
+
+    O barramento AMBA (Advanced Microcontroller Bus Architecture) é utilizada
+    como o padrão de comunicação interno de chips ARM. O barramento AMBA tem
+    como principal vantagem a possibilidade de reuso de IP e melhor comunicação
+    com o mesmo, tornando-se o largamente adotado pela industria.
+
+    O design e principio de funcionamento do AMBA baseia-se ser o mais
+    compatível possível com periféricos, além do reuso dos núcleos de IP
+    (Intellecutal Property),
+    reduzindo possíveis problemas envolvendo licensas em semicondutores.
+
+  \item O que é ARM Thumb Instruction Set?
+
+    O Thumb Instruction Set é uma maneira alternativa que os chips ARM aceitam
+    de receber suas instruções, que tradicionalmente seriam de 32 bits, passam a
+    ser de 16 bits. É importante ressaltar que o instruction set de uma
+    aplicação pode ser definido pelo seu desenvolvedor, mas que uma vez
+    definido, uma aplicação não poderá ter mais de um formato.
+
+  \item O que é a Float Point Unit (FPU) e qual a sua utiização?
+
+    A FPU é um hardware análogo à Unidade Lógica Aritmética, mas que trabalham
+    com o cálculo exclusivo de números de ponto flutuante, inicialmente eram
+    consideradas ``artigos de luxo'', mas ao final da década de 1990 já
+    passariam à fazer parte das principais CPUs.
+
+\end{enumerate}
+
+\section{Tópicos extras}
+\label{sec:orgheadline3}
+\begin{enumerate}
+  \item Qual a forma de medir desempenho de um uC?
+
+    Apesar de existirem diversas maneiras de se medir o desempenho de um
+    microcontrolador, a maneira mais utilizada é o ``tamanho da palavra'', ou
+    seja o comprimento máximo de um número binário que este processador consegue
+    manipular, por exemplo, processadores ARM tem um maior ``tamanho de
+    palavra'' do que os Atmel utilizados nos Arduino Uno e Mega (enquanto os
+    Atmel são de 8 bits, os ARM são de 32 bits).
+
+  \item Quais são os modos de endereçamento de memória em um uC?
+
+    De maneira genérica, a CPU se comunica com a memória por dois barramentos
+    distintos: O barramento de endereços e o barramento de dados. Como o próprio
+    nome já indica, é pelo barramento de endereços que a CPU indica onde deve-se
+    ler ou escrever na memória do microcontrolador. A memória costuma ser
+    alocada em blocos consecutivos, os quais podem ser sub-dividios de acordo
+    com o tamanho de palavra do mesmo (vide pergunta anterior).
+
+  \item Classifique os tipos de memórias de um uC.
+
+    Existem três principais tipos de memórias em uCs, as memórias FLASH, EEPROM
+    e SRAM. A memória FLASH é análoga ao HD de um computador, onde são
+    armazenados dados de saída de programas. É relevante ressaltar que dados
+    inseridos na FLASH não podem ser alterados pela execução de programas.
+
+    A memória EEPROM é uma memória chamada não-volátil, de forma que, mesmo com
+    o uC desligado os dados permanecem intactos. A EEPROM tem uma vida útil, por
+    tanto não é recomendado que sejam armazenados dados que mudam com
+    frequência, mas sim informações como valores de configuração e setup de
+    diversos softwares ou até mesmo do SO.
+
+    Por fim, a SRAM é a memória mais acessada e escrita pelo uC. Quando
+    declaramos uma variável da maneira mais tradicional é lá que será
+    armazenada, lida e tratada de maneira geral. Ao iniciar um programa, os
+    dados do mesmo que estão na memória FLASH são copiados para a SRAM, onde o
+    programa é de fato executado/manipulado.
+\end{document}
