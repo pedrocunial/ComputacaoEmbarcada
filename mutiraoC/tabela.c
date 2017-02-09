@@ -9,14 +9,8 @@ typedef struct type_product
 } product;
 
 
-product* create_table()
+product * create_table(product *products, unsigned short n_products)
 {
-    unsigned short n_products;
-    product* products;
-
-    printf("Quantas comidas você comprou?\n");
-    scanf("%d", &n_products);
-    products = malloc(n_products * sizeof(product));
 
     for (n_products; n_products--;) {
         printf("Entre o nome do produto:\n");
@@ -31,8 +25,13 @@ product* create_table()
 
 int main()
 {
-    product* products = create_table();
-    unsigned short n_products = sizeof(products) / sizeof(products[0]);
+    unsigned short n_products;
+    product *products;
+
+    printf("Quantas comidas você comprou?\n");
+    scanf("%d", &n_products);
+    products = malloc(n_products * sizeof(product));
+    create_table(products, n_products);
 
     printf("| Nome do produto | Preço Unitário | Quantidade comprada |");
     printf(" Total do Produto |\n");
