@@ -31,16 +31,7 @@ product * create_table(product *products, unsigned short n_products)
     return products;
 }
 
-int main()
-{
-    unsigned short n_products;
-    product *products;
-
-    printf("Quantas comidas você comprou?\n");
-    scanf("%d", &n_products);
-    products = malloc(n_products * sizeof(product));
-    create_table(products, n_products);
-
+void show_table(product *products, unsigned short n_products) {
     printf("| %s | %s | %s | %s |\n",
            product_name,
            unit_price,
@@ -64,5 +55,17 @@ int main()
                products[n_products].qtd,
                products[n_products].price * products[n_products].qtd);
     }
+}
+
+int main()
+{
+    unsigned short n_products;
+    product *products;
+
+    printf("Quantas comidas você comprou?\n");
+    scanf("%d", &n_products);
+    products = malloc(n_products * sizeof(product));
+    show_table(create_table(products, n_products), n_products);
+
     return 0;
 }
