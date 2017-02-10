@@ -9,15 +9,15 @@ const char *unit_price = "Preço Unitário";
 const char *bought_qtd = "Quantidade Comprada";
 const char *product_total = "Total do Produto";
 
-typedef struct type_product
+typedef struct product
 {
     char name[20];
     unsigned short qtd;
     float price;
-} product;
+} product_t;
 
 
-product * create_table(product *products, unsigned short n_products)
+product_t * create_table(product_t *products, unsigned short n_products)
 {
 
     for (n_products; n_products--;) {
@@ -31,7 +31,7 @@ product * create_table(product *products, unsigned short n_products)
     return products;
 }
 
-void show_table(product *products, unsigned short n_products) {
+void show_table(product_t *products, unsigned short n_products) {
     printf("| %s | %s | %s | %s |\n",
            product_name,
            unit_price,
@@ -60,11 +60,11 @@ void show_table(product *products, unsigned short n_products) {
 int main()
 {
     unsigned short n_products;
-    product *products;
+    product_t *products;
 
     printf("Quantas comidas você comprou?\n");
     scanf("%d", &n_products);
-    products = malloc(n_products * sizeof(product));
+    products = malloc(n_products * sizeof(product_t));
     show_table(create_table(products, n_products), n_products);
 
     return 0;
