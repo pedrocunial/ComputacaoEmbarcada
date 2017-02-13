@@ -1,0 +1,13 @@
+\BOOKMARK [1][-]{section.1}{Cross-Compiler}{}% 1
+\BOOKMARK [2][-]{subsection.1.1}{O que \351 cross compila\347\343o \(cross-compiler\)?}{section.1}% 2
+\BOOKMARK [1][-]{section.2}{Embarcados}{}% 3
+\BOOKMARK [2][-]{subsection.2.1}{O que \351 RTOS, descreva uma utiliza\347\343o.}{section.2}% 4
+\BOOKMARK [2][-]{subsection.2.2}{O que \351 desenvolvimento de projetos em V \(Modelo V\)?}{section.2}% 5
+\BOOKMARK [2][-]{subsection.2.3}{O que \351 um DSP? O que difere de um uC?}{section.2}% 6
+\BOOKMARK [1][-]{section.3}{C}{}% 7
+\BOOKMARK [2][-]{subsection.3.1}{Descreva a funcionalidade do:}{section.3}% 8
+\BOOKMARK [3][-]{subsubsection.3.1.1}{Compilador C}{subsection.3.1}% 9
+\BOOKMARK [3][-]{subsubsection.3.1.2}{Assembler}{subsection.3.1}% 10
+\BOOKMARK [3][-]{subsubsection.3.1.3}{Linker}{subsection.3.1}% 11
+\BOOKMARK [2][-]{subsection.3.2}{Qual a diferen\347a entre C e C++?}{section.3}% 12
+\BOOKMARK [1][-]{section.4}{Paralelismo vs Concorr\352ncia}{}% 13
