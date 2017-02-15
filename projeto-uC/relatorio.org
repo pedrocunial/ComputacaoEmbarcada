@@ -1,0 +1,23 @@
+#+AUTHOR: Pedro Cunial
+#+TITLE: Descrição de Possiveis Projetos
+
+* Cafeteira Despertador
+** Descrição da Ideia
+   A idéia é construir um despertador que te acorde já com café pronto e quente
+   (recém feito).
+** Diagrama de Blocos
+** Listagem de Tecnologias
+   Para a realização do projeto, pretendo utilizar um micro-controlador principal
+   para gerenciar dois micro-processadores externos, um para o relógio e outro
+   para a cafeteira. A cafeteira deverá ter uma resistência para aquecer a água,
+   assim como um sensor de temperatura para garantir que a água de fato fora
+   aquecida e os dispensers de água e café.
+
+   O relógio precisa de um visor para as horas e um botão para desligar o
+   despertador, o controle de mudar as horas e definir o horário à despertar será
+   feito por wifi/bluetooth (ainda não tenho certeza qual das duas tecnologias
+   seria a melhor).
+** Possíveis gargalos
+   Eu imagino que o principal gargalo do projeto será a parte da cafeteira,
+   principalmente a parte de automatizar todos os dispensers e temperatura da
+   água.
