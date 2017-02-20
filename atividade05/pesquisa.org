@@ -1,0 +1,6 @@
+#+AUTHOR: Pedro Cunial
+#+TITLE: Pesquisa 05 -- Kit de Desenvolvimento SAME-70
+
+* Overview
+** Esboce um diagrama de blocos que ilustre a interação entre o uC, hardware, firmware
+   O uC serve como ponto central da execução de u firmware em um hardware. O firmware é colocado no uC, o qual o executa no hardware.

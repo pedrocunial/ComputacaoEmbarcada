@@ -1,0 +1,17 @@
+\BOOKMARK [1][-]{section.1}{Overview}{}% 1
+\BOOKMARK [2][-]{subsection.1.1}{Esboce um diagrama de blocos que ilustre a intera\347\343o entre o uC, hardware, firmware}{section.1}% 2
+\BOOKMARK [1][-]{section.2}{SAM-E70 microcontrolador}{}% 3
+\BOOKMARK [2][-]{subsection.2.1}{Identifique a fam\355lia e liste as especificidades do microcontrolador utilizado no curso}{section.2}% 4
+\BOOKMARK [2][-]{subsection.2.2}{Liste os tipos de mem\363rias internas do microcontrolador SAM-E70 e seus tamanhos}{section.2}% 5
+\BOOKMARK [2][-]{subsection.2.3}{Por que \351 importante saber quanto de mem\363ria um uC possui?}{section.2}% 6
+\BOOKMARK [2][-]{subsection.2.4}{Escolha um dos perif\351ricos do uC e explique sua funcionalidade}{section.2}% 7
+\BOOKMARK [2][-]{subsection.2.5}{O que \351 watchdog timer e qual \351 sua utiliza\347\343o?}{section.2}% 8
+\BOOKMARK [2][-]{subsection.2.6}{Pesquise nos fornecedores qual o valor de mercado do chip utilizado no kit de desenvolvimento SAM-E70}{section.2}% 9
+\BOOKMARK [1][-]{section.3}{SAM-E70-XPLD hardware}{}% 10
+\BOOKMARK [2][-]{subsection.3.1}{Descreva como funciona a grava\347\343o via JTAG e porqu\352 \351 bastante utilizada pela industria}{section.3}% 11
+\BOOKMARK [2][-]{subsection.3.2}{Qual a rela\347\343o do clock no consumo de energia em sistems eletr\364nicos?}{section.3}% 12
+\BOOKMARK [2][-]{subsection.3.3}{Qual o valor do cristall utilizado no kit SAME-70?}{section.3}% 13
+\BOOKMARK [1][-]{section.4}{Firmware \205 Especificidades}{}% 14
+\BOOKMARK [2][-]{subsection.4.1}{O que s\343o vari\341veis volatile/const/static?}{section.4}% 15
+\BOOKMARK [2][-]{subsection.4.2}{O que \351 um makefile e qual a sua utiliza\347\343o?}{section.4}% 16
+\BOOKMARK [2][-]{subsection.4.3}{O que \351 ASCII e quando \351 utilizado?}{section.4}% 17
