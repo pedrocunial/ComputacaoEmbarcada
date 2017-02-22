@@ -155,7 +155,7 @@
  * 8 como 1, ou seja, irá configurar o pino PIOC8 como sendo saída.
  * 
  */
-#define LED_PIO_ID	            // id do periférico C	
+#define LED_PIO_ID	    12        // id do periférico C	
 #define LED_PIO			PIOC
 #define LED_PIN			8
 #define LED_PIN_MASK	(1<<LED_PIN) 
@@ -233,7 +233,7 @@ int main(void)
 	*	- PIO_CODR : coloca 0 no pino 
     */
 	PIOC->PIO_CODR =  (1 << 8);
-	
+	char up = 1;
 	/************************************************************************/
 	/* Super loop                                                           */
 	/************************************************************************/
@@ -242,8 +242,15 @@ int main(void)
 	* @Brief Diferente de um código comum que executa em um pc, no uC deve estar
 	* sempre executando um código, por isso utilizamos esse loop infinito.
 	*/
-	while(1){
-		
+	while (1) {
+		for (size_t i = 0; i < 500000000; i++);
+		if (up) {
+			PIOC->PIO_SODR = (1 << 8);
+			up = 0;
+		} else {
+			PIOC->PIO_CODR = (1 << 8);
+			up = 1;
+		}
 	};
 }
 
