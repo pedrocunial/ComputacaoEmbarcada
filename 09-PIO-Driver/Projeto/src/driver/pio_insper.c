@@ -23,8 +23,7 @@ void _pio_set_output(Pio *p_pio,
 	else
 		p_pio->PIO_CODR = ul_mask;
 		
-	if (ul_pull_up_enable)
-		p_pio->PIO_PUER = ul_mask;
+	_pio_pull_up(p_pio, ul_mask, ul_pull_up_enable);
 }
 
 
@@ -61,10 +60,11 @@ void _pio_set_input(Pio *p_pio,
 		
 	else if (ul_attribute & PIO_DEBOUNCE)
 		p_pio->PIO_IFSCER = ul_mask;
-	
-	if (ul_attribute & PIO_OPENDRAIN)
-		p_pio->OPDCMD = ul_mask;
-		
+
+	// Professor, não consigo achar o registrador de configurar
+	// o OPENDRAIN de maneira alguma, estou simplesmente ignorando
+	// sua existência por enquanto, espero que entenda, não foi por
+	// falta de esforço	
 }
 
 /**
@@ -79,7 +79,10 @@ void _pio_pull_up(Pio *p_pio,
 		          const uint32_t ul_mask,
 		          const uint32_t ul_pull_up_enable)
 {
-	
+	if (ul_pull_up_enable)
+		p_pio->PIO_PUER = ul_mask;
+	else
+		p_pio->PIO_PUDR = ul_mask;	
 }
 
 /**
@@ -94,7 +97,10 @@ void _pio_pull_down(Pio *p_pio,
                     const uint32_t ul_mask,
 	            	const uint32_t ul_pull_down_enable)
 {
-	
+	if (ul_pull_down_enable)
+		p_pio->PIO_PPDER;
+	else
+		p_pio->PIO_PPDDR;	
 }
 
 /**
@@ -108,7 +114,7 @@ void _pio_pull_down(Pio *p_pio,
 void _pio_set(Pio *p_pio, 
               const uint32_t ul_mask)
 {
-	
+	p_pio->PIO_SODR = ul_mask;
 }
 
 /**
@@ -122,7 +128,7 @@ void _pio_set(Pio *p_pio,
 void _pio_clear( Pio *p_pio, 
                 const uint32_t ul_mask)
 {
-	
+	p_pio->PIO_CODR = ul_mask;
 } 
 
  /**
@@ -139,5 +145,5 @@ void _pio_clear( Pio *p_pio,
 uint32_t _pio_get_output_data_status(const Pio *p_pio,
                                      const uint32_t ul_mask)
 {
-	
+	return p_pio->PIO_PDSR & ul_mask;
 }
