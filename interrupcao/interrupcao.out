@@ -1,0 +1,16 @@
+\BOOKMARK [1][-]{section.1}{Introdu\347\343o}{}% 1
+\BOOKMARK [1][-]{section.2}{Exce\347\365es}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{Qual a diferen\347a entre as exce\347\365es NMI e IRQ?}{section.2}% 3
+\BOOKMARK [1][-]{section.3}{Interrup\347\343o}{}% 4
+\BOOKMARK [2][-]{subsection.3.1}{Qual a diferen\347a entre exce\347\365es IRQ e ISR?}{section.3}% 5
+\BOOKMARK [2][-]{subsection.3.2}{No ARM que utilizamos no curso, quantas s\343o as interrup\347\365es suportadas e qual a sua menor prioridade?}{section.3}% 6
+\BOOKMARK [2][-]{subsection.3.3}{Descreva o uso do FIQ.}{section.3}% 7
+\BOOKMARK [2][-]{subsection.3.4}{No diagrama anterior, quem possui maior prioridade IRQ ou FIQ?}{section.3}% 8
+\BOOKMARK [2][-]{subsection.3.5}{No datasheet, sec\347\343o 13.1 informa o ID do perif\351rico que est\341 associado com a sua interrup\347\343o. Busque a informa\347\343o e liste o ID dos seguintes perif\351ricos:}{section.3}% 9
+\BOOKMARK [2][-]{subsection.3.6}{O que aconteceria caso n\343o limpemos a interrup\347\343o?}{section.3}% 10
+\BOOKMARK [2][-]{subsection.3.7}{O que \351 \351 lat\352ncia na resolu\347\343o de uma interrup\347\343o, o que \351 feito nesse tempo? \(Interrupt Latency\)}{section.3}% 11
+\BOOKMARK [1][-]{section.4}{Software - CMSIS}{}% 12
+\BOOKMARK [1][-]{section.5}{PIO - Interrup\347\343o}{}% 13
+\BOOKMARK [2][-]{subsection.5.1}{Qual deve ser a configura\347\343o para operarmos no bot\343o do kit SAME70-EK2?}{section.5}% 14
+\BOOKMARK [2][-]{subsection.5.2}{Com base no texto anterior e nos diagramas de blocos descreva o uso da interrup\347\343o e suas op\347\365es.}{section.5}% 15
+\BOOKMARK [2][-]{subsection.5.3}{Descreva as fun\347\365es dos registradores:}{section.5}% 16
