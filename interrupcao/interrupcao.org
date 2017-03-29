@@ -1,0 +1,61 @@
+#+AUTHOR: Pedro Cunial Campos
+#+TITLE: 10 Pesquisa -- Interrupção e Exceções
+
+
+* Introdução
+* Exceções
+** Qual a diferença entre as exceções NMI e IRQ?
+   As exceções NMI (Non-maskable Interrupt) que não podem ser ignoradas
+   por técnicas comuns de mascaramento de interrupções, ou seja, são interrupções
+   de maior prioridade, comumente utilizadas em caso de erros críticos que podem
+   gerar estados não recuperáveis do software ou hardware caso não sejam tratadas
+   com urgência.
+
+   Enquanto isso, as IRQ (Interrupt Request) são interrupções de menor prioridade
+   que, como o nome já sugere, adiciona um pedido de interrupções na stack de um
+   manipulador de interrupções do sistema. IRQ costumam ser utilizadas para a
+   manipulação de eventos, sejam eles de recebimentos de dados, ou de teclas
+   precionadas.
+
+* Interrupção
+** Qual a diferença entre exceções IRQ e ISR?
+   Enquanto as IRQ inserem requesições de interrupções direto na stack do
+   manipulador de eventos, enquanto as ISR são tratadas pelo seu respectivo
+   interruption handler.
+** No ARM que utilizamos no curso, quantas são as interrupções suportadas e qual a sua menor prioridade?
+   O NVIC do ARM utilizado no curso suporta 72 interrupções diferentes, sendo o
+   menor nível de prioridade possível 7 (8 níveis diferentes de prioridade).
+** Descreva o uso do FIQ.
+   A FIQ é uma interrupção de altíssima prioridade que desabilita qualquer outro
+   handler (seja o handler comum de eventos e interrupções ou o handler específico
+   de uma ISR ou outra FIQ).
+** No diagrama anterior, quem possui maior prioridade IRQ ou FIQ?
+   Pelo diagrama, o FIQ tem maior prioridade em comparação ao IRQ, o que pode ser
+   explicado pelo fato das FIQs desabilitarem qualquer outro handler ao enquanto
+   acionadas.
+** No datasheet, secção 13.1 informa o ID do periférico que está associado com a sua interrupção. Busque a informação e liste o ID dos seguintes periféricos:
+   - PIOA
+     10
+   - PIOC
+     12
+   - TC0
+     23
+** O que aconteceria caso não limpemos a interrupção?
+   Caso não limpemos a interrupção, o NVIC não saberá que a interrupção fora
+   resolvida e, portanto, ficará "preso" no seu processo, podendo apenas receber
+   interrupções de maior prioridade, e sem voltar para a thread principal da sua
+   aplicação.
+** O que é é latência na resolução de uma interrupção, o que é feito nesse tempo? (Interrupt Latency)
+   Em suma, a latência na resolução de uma interrupção é o tempo entre o envio da
+   interrupção e a execução do código associado a mesma. Dependendo do tipo de
+   interrupção, existem diferentes processos que podem ocorrer entre a mesma e
+   sua execução, por exemplo, no caso de interrupções de menor prioridade, o
+   intervalo entre seu sinal e o início de sua execução pode ser utilizado pela
+   execução de uma interrupção de maior prioridade. Em casos de IRQ, por exemplo,
+   sua latência costuma também estar associada à eventos "à sua frente" na stack
+   do manipulador de eventos.
+
+* Software - CMSIS
+
+* PIO - Interrupção
+** Qual deve ser a configuração para operarmos no botão do kit SAME70-EK2?
