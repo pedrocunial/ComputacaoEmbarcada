@@ -174,6 +174,7 @@ static void socket_cb(SOCKET sock, uint8_t u8Msg, void *pvMsg)
 		switch (u8Msg) {
 		case SOCKET_MSG_CONNECT:
 		{
+			puts("Estou no SOCKET_MSG_CONNECT");
 			if (gbTcpConnection) {
 				memset(gau8ReceivedBuffer, 0, sizeof(gau8ReceivedBuffer));
 				sprintf((char *)gau8ReceivedBuffer,
@@ -204,6 +205,7 @@ static void socket_cb(SOCKET sock, uint8_t u8Msg, void *pvMsg)
 
 			tstrSocketRecvMsg *pstrRecv = (tstrSocketRecvMsg *)pvMsg;
 			if (pstrRecv && pstrRecv->s16BufferSize > 0) {
+				printf("%s\r\n", "Hello SHREK!!!");
 				printf("%s\r\n", (uint8 *) pstrRecv->pu8Buffer);
 				//printf("%s\r\n", (uint8 *) pstrRecv->pu8Buffer + 100 );
 

@@ -54,7 +54,7 @@ extern "C" {
 
 #define MAIN_HTTP_PROV_SERVER_DOMAIN_NAME    "wifiConfig.com"
 
-#define MAIN_M2M_DEVICE_NAME                 "ComputacaoEmbarcada"
+#define MAIN_M2M_DEVICE_NAME                 "PedroCunial"
 #define MAIN_MAC_ADDRESS                     {0xf8, 0xf0, 0x05, 0x45, 0xD4, 0x84}
 
 /** Using broadcast address for simplicity. */
@@ -64,11 +64,11 @@ extern "C" {
 #define IPV4_BYTE(val, index)               ((val >> (index * 8)) & 0xFF)
 
 /** Send buffer of TCP socket. */
-#define MAIN_PREFIX_BUFFER                  "GET /posts/1"
+#define MAIN_PREFIX_BUFFER                  "GET /"
 #define MAIN_POST_BUFFER                    ""
 
 /** Weather information provider server. */
-#define MAIN_WEATHER_SERVER_NAME            "jsonplaceholder.typicode.com"
+#define MAIN_WEATHER_SERVER_NAME            "google.com"
 
 /** Input City Name. */
 #define MAIN_CITY_NAME                      "SãoPaulo"
