@@ -44,11 +44,11 @@ volatile uint32_t g_ul_value = 0;
 
 // Valores de tempo
 #define YEAR   2017
-#define MONTH  3
-#define DAY    27
-#define WEEK   13
-#define HOUR   9
-#define MINUTE 5
+#define MONTH  4
+#define DAY    17
+#define WEEK   17
+#define HOUR   17
+#define MINUTE 18
 #define SECOND 0
 
 // TC
@@ -130,15 +130,6 @@ void RTC_init(void)
 	// preciso de interrupções de 1 em 1 segundo
 	rtc_set_date(RTC, YEAR, MONTH, DAY, WEEK);
 	rtc_set_time(RTC, HOUR, MINUTE, SECOND);
-
-	// configure RTC interrupts
-	NVIC_DisableIRQ(RTC_IRQn);
-	NVIC_ClearPendingIRQ(RTC_IRQn);
-	NVIC_SetPriority(RTC_IRQn, 0);  // high priority
-	NVIC_EnableIRQ(RTC_IRQn);
-
-	// ativa a interrupcao via alarme
-	rtc_enable_interrupt(RTC, RTC_IER_ALREN);
 }
 
 void TC1_init(void)
@@ -149,7 +140,7 @@ void TC1_init(void)
 	// Configura o PMC
 	pmc_enable_periph_clk(ID_TC1);
 
-	// Configura o TC para operar em 16MHz (1s) e interrupcao
+	// Configura o TC para operar em 1MHz (1s) e interrupcao
 	// no RC compare
 	tc_find_mck_divisor(FREQ, ul_sysclk, &ul_div, &ul_tcclks, ul_sysclk);
 	tc_init(TC0, TC1_CHANNEL, ul_tcclks | TC_CMR_CPCTRG);
@@ -167,13 +158,24 @@ void TC1_init(void)
 void TC1_Handler(void)
 {
 	volatile uint32_t ul_dummy;
+	uint32_t pul_hour, pul_minute, pul_second;
+	uint32_t pul_day, pul_month, pul_year, pul_week;
 
 	// devemos indicar ao TC que a interrupcao foi satisfeita
 	ul_dummy = tc_get_status(TC0, TC1_CHANNEL);
 	UNUSED(ul_dummy);
 	// chamado apos o intervalo desejado (1s)
 	// printa temperatura
-	printf("Temp : %dºC \r\n", (uint32_t) convert_adc_to_temp(g_ul_value));
+	rtc_get_date(RTC, &pul_year, &pul_month, &pul_day, &pul_week);
+	rtc_get_time(RTC, &pul_hour, &pul_minute, &pul_second);
+	printf("%02d/%02d/%04d - %02d:%02d:%02d - Temp : %dºC \r\n",
+			pul_day,
+			pul_month,
+			pul_year,
+			pul_hour,
+			pul_minute,
+			pul_second,
+			(uint32_t) convert_adc_to_temp(g_ul_value));
 	afec_start_software_conversion(AFEC0);
 }
 
@@ -249,7 +251,7 @@ int main(void)
 
 	// Configuração de interrupções de timer
 	TC1_init();
-	// RTC_init();
+	RTC_init();
 
 	while (1) {
 		//if(is_conversion_done == true) {
