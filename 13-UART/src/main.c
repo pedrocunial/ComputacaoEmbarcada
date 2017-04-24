@@ -65,8 +65,8 @@ void USART1_Handler(void){
 
   // Verifica por qual motivo entrou na interrupçcao
   if(ret & US_IER_RXRDY){                     // Dado disponível para leitura
-    usart_serial_getchar(USART_COM, &c);
-    usart_puts(bufferTX);
+	usart_gets(bufferRX);
+	usart_puts(bufferRX);
   } else if(ret & US_IER_TXRDY){              // Transmissão finalizada
 
   }
@@ -144,6 +144,11 @@ static void USART1_init(void){
   /* Enable the receiver and transmitter. */
 	usart_enable_tx(USART_COM);
 	usart_enable_rx(USART_COM);
+
+	// Enable interrupts on the reciever
+	usart_enable_interrupt(USART_COM, US_IER_RXRDY);
+	NVIC_EnableIRQ(USART_COM_ID);
+
  }
 
 /**
@@ -182,6 +187,15 @@ uint32_t usart_gets(uint8_t *pstring){
 	return count;
 }
 
+//void USART1_Handler(void) {
+	//uint32_t ret = usart_get_status(USART_COM);
+	//// Verifica por qual motivo entrou na interrupçcao
+	//if(ret & US_IER_RXRDY) { // Dado disponível para leitura
+//
+	//} else if(ret & US_IER_TXRDY) { // Transmissão finalizada
+	//}
+//}
+
 /************************************************************************/
 /* Main Code	                                                        */
 /************************************************************************/
@@ -207,10 +221,8 @@ int main(void){
   delay_init( sysclk_get_cpu_hz());
 
 	while (1) {
-	    sprintf(bufferTX, "%s \n", "Ola Voce");
-		//usart_puts(bufferTX);
-		usart_gets(bufferRX);
-		usart_puts(bufferRX);
-    delay_s(1);
+	    sprintf(bufferTX, "%s", "Ola Voce");
+		usart_puts(bufferTX);
+		delay_s(1);
 	}
 }
