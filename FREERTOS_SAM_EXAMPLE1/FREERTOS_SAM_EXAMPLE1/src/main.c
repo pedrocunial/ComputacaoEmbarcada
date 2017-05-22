@@ -126,12 +126,28 @@
 #define LED3_PIN       2
 #define LED3_PIN_MASK  (1 << LED3_PIN)
 
+/**
+ * Bot<E3>o da placa
+ */
+#define BUT_PIO_ID      ID_PIOA
+#define BUT_PIO         PIOA
+#define BUT_PIN             11
+#define BUT_PIN_MASK    (1 << BUT_PIN)
+#define BUT_DEBOUNCING_VALUE  79
+
+
+// Globals
+SemaphoreHandle_t led0Mutex = NULL;
+SemaphoreHandle_t led1Mutex = NULL;
+SemaphoreHandle_t led2Mutex = NULL;
+SemaphoreHandle_t led3Mutex = NULL;
 
 typedef struct {
 	Pio *pio;
 	uint32_t pio_id;
 	uint32_t pin_mask;
 	uint32_t stime;
+	SemaphoreHandle_t sem;
 } my_led_t;
 
 extern void vApplicationStackOverflowHook(xTaskHandle *pxTask,
@@ -220,11 +236,39 @@ static void task_led(void *pvParameters)
 	    /**
 	    *  Toggle status led
 		*/
+		xSemaphoreTake(led->sem, 10);
         if(pio_get_output_data_status(led->pio, led->pin_mask))
             pio_clear(led->pio, led->pin_mask);
         else
             pio_set(led->pio, led->pin_mask);
 		vTaskDelay(led->stime);
+		xSemaphoreGive(led->sem);
+	}
+}
+
+volatile int clicked = 0;
+
+static void task_but(void *params)
+{
+	UNUSED(params);
+	for (;;) {
+		if (!pio_get(BUT_PIO, PIO_INPUT, BUT_PIN_MASK)) {
+			if (!clicked) {
+				clicked = 1;
+				xSemaphoreTake(led0Mutex, 10);
+				xSemaphoreTake(led1Mutex, 10);
+				xSemaphoreTake(led2Mutex, 10);
+				xSemaphoreTake(led3Mutex, 10);
+			}
+		} else {
+			if (clicked) {
+				clicked = 0;
+				xSemaphoreGive(led0Mutex);
+				xSemaphoreGive(led1Mutex);
+				xSemaphoreGive(led2Mutex);
+				xSemaphoreGive(led3Mutex);
+			}
+		}
 	}
 }
 
@@ -240,6 +284,17 @@ void led_init(
     pmc_enable_periph_clk(pio_id);
     pio_set_output(p_pio, pin_mask, 1, 0, 0 );
 };
+
+void but_init(
+		Pio *p_but_pio,
+		const u_int32_t pio_id,
+		const u_int32_t but_pin_mask)
+{
+	/* config. pino botao em modo de entrada */
+	pmc_enable_periph_clk(pio_id);
+	pio_set_input(p_but_pio, but_pin_mask, PIO_PULLUP | PIO_DEBOUNCE);
+};
+
 
 
 /**
@@ -286,6 +341,11 @@ int main(void)
 	led_init(LED2_PIO, LED2_PIO_ID, LED2_PIN_MASK, 1);
 	led_init(LED3_PIO, LED3_PIO_ID, LED3_PIN_MASK, 1);
 	led_init(LED_PIO, LED_PIO_ID, LED_PIN_MASK, 1);
+	but_init(BUT_PIO, BUT_PIO_ID, BUT_PIN_MASK);
+	led0Mutex = xSemaphoreCreateMutex();
+	led1Mutex = xSemaphoreCreateMutex();
+	led2Mutex = xSemaphoreCreateMutex();
+	led3Mutex = xSemaphoreCreateMutex();
 	my_led_t *led1 = malloc(sizeof(my_led_t));
 	my_led_t *led2 = malloc(sizeof(my_led_t));
 	my_led_t *led3 = malloc(sizeof(my_led_t));
@@ -294,18 +354,22 @@ int main(void)
 	led1->pio_id = LED1_PIO_ID;
 	led1->pin_mask = LED1_PIN_MASK;
 	led1->stime = 666;
+	led1->sem = led1Mutex;
 	led2->pio = LED2_PIO;
 	led2->pio_id = LED2_PIO_ID;
 	led2->pin_mask = LED2_PIN_MASK;
 	led2->stime = 420;
+	led2->sem = led2Mutex;
 	led3->pio = LED3_PIO;
 	led3->pio_id = LED3_PIO_ID;
 	led3->pin_mask = LED3_PIN_MASK;
 	led3->stime = 1337;
+	led3->sem = led3Mutex;
 	led0->pio = LED_PIO;
 	led0->pio_id = LED_PIO_ID;
 	led0->pin_mask = LED_PIN_MASK;
 	led0->stime = 1000;
+	led0->sem = led0Mutex;
 
 	/* Initialize the console uart */
 	configure_console();
@@ -322,6 +386,10 @@ int main(void)
 		printf("Failed to create Monitor task\r\n");
 	}
 
+	if (xTaskCreate(task_but, "But", TASK_MONITOR_STACK_SIZE, NULL,
+			TASK_MONITOR_STACK_PRIORITY, NULL) != pdPASS) {
+		puts("ops");
+	}
 	/* Create task to make led blink */
 	if (xTaskCreate(task_led, "Led0", TASK_LED_STACK_SIZE, led0,
 			TASK_LED_STACK_PRIORITY, NULL) != pdPASS) {
